@@ -1,0 +1,41 @@
+html,body{
+    height: 100%;
+}
+header{
+    height: 60px;
+    background-color: yellow;
+}
+.body{
+    background-color: rgba(0,0,0,.5);
+    position: relative;
+    width: 320px;
+    height: 550px;
+    margin: 0 auto;
+}
+.btn{
+    position: absolute;
+    bottom: 0;
+    width: 100px;
+    height: 100px;
+    left:calc(50% - 50px);
+    background-color: aqua;
+}
+.bull,.red{
+    width: 30px;
+    height: 30px;
+    background-color: aqua;
+    position: absolute;
+    bottom: 100px;
+    left: calc(50% - 15px);
+}
+.red{
+    background-color:red;
+}
+.target{
+    width: 45px;
+    height: 45px;
+    background-color: blue;
+    position:absolute;
+    top: -20px;
+    left: calc(50% - 22px);
+}
