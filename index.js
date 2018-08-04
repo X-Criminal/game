@@ -2,11 +2,12 @@ function game(){
      this.body = document.querySelector(".body");//界面
      this.btn = document.querySelector(".btn");//发射按钮
      this.Bullets=[];//子弹
-     this.bulletsPosition=[];//子弹坐标
+     this.BulletsBottom=1;
      this.gargets=[];//下落点；
-     this.gargetsPosition=[];//下落点坐标；
+     this.gargetsTop=1;
      this.gargetTime=3000;//创建下落点间隔时间
      this.gargetMoveTime=25;//下落速度
+     this.Over1=300;
      this.clickFlag=null;//点击事件
      this.btnstate=false;//点击事件
      this.point=300;
@@ -28,17 +29,17 @@ Object.assign(game.prototype,{
     newBullet:function(id){
         var span = document.createElement("span");
         id===1?span.className="bull":span.className="red";
-        this.body.appendChild(span);
+        span.style.bottom="100px";
         this.Bullets.push(span);
-        this.bulletsPosition.push(0);
+        this.body.appendChild(span);
     },
     /**创建下落物品**/
     newgarget:function(){
       var span=document.createElement("span");
           span.className="target";
-        this.body.appendChild(span);
+          span.style.top="1px";
           this.gargets.push(span);
-          this.gargetsPosition.push(0);
+        this.body.appendChild(span);
     },
     /**点击事件 单击&双击**/
     doOnClick: function (cb) {
@@ -64,8 +65,23 @@ Object.assign(game.prototype,{
         setInterval(function () {
             if (_this.Bullets.length > 0) {
                 for (var i = 0, idx = _this.Bullets.length; i < idx; i++) {
-                    _this.bulletsPosition[i] = _this.bulletsPosition[i]+1;
-                    _this.Bullets[i].style.transform ="translateY(-"+_this.bulletsPosition[i]+"px)";
+                    var enemySpeed =parseInt(_this.Bullets[i].style.bottom);
+                    enemySpeed+=_this.BulletsBottom;
+                    _this.Bullets[i].style.bottom=enemySpeed+"px";
+                    if(Number(_this.Bullets[i].style.bottom.substring(0,3))>530){
+                        _this.body.removeChild(_this.Bullets[i]);
+                        _this.Bullets.splice(i,1);
+                    }
+                     for(var k = 0,ind=_this.gargets.length;k<ind;k++){
+                          if(_this.hitTestObject(_this.Bullets[i],_this.gargets[k])){
+                              console.log("撞上了");
+                              _this.Over(_this.Bullets[i] );
+                              _this.body.removeChild(_this.Bullets[i]);
+                              _this.Bullets.splice(i,1);
+                              _this.body.removeChild(_this.gargets[k]);
+                              _this.gargets.splice(k,1);
+                          }
+                     }
                 }
             }
         },10)
@@ -83,16 +99,55 @@ Object.assign(game.prototype,{
         setInterval(function(){
             if(_this.gargets.length>0){
                 for(var i =0,idx=_this.gargets.length;i<idx;i++){
-                    _this.gargetsPosition[i]=_this.gargetsPosition[i]+1;
-                    _this.gargets[i].style.transform="translateY("+_this.gargetsPosition[i]+"px)";
-                    if(_this.gargetsPosition[i]>=this.point){
-
+                    if(parseInt(_this.gargets[i].style.top) > _this.Over1){
+                        _this.body.removeChild(_this.gargets[i]);
+                        _this.gargets.splice(i,1);
+                        return;
                     }
+                    var enemySpeed =parseInt(_this.gargets[i].style.top);
+                    enemySpeed+=_this.gargetsTop;
+                    _this.gargets[i].style.top=enemySpeed+"px";
                 }
             }
         },this.gargetMoveTime)
     },
-    /**下落物消失位置**/
+    /**碰撞检测**/
+    hitTestObject: function (item, hitObj) {
+        if (item == null || hitObj == null) {
+            return false;
+        }
+        /*检测碰撞元素上下左右的位置*/
+        var itemTop = item.offsetTop,
+            itemFoot = item.offsetTop + item.offsetHeight,
+            itemLeft = item.offsetLeft,
+            itemRight = item.offsetLeft + item.offsetWidth;
+        /*被碰撞元素的上下左右的位置*/
+        var hitTop = hitObj.offsetTop,
+            hitFoot = hitObj.offsetTop + hitObj.offsetHeight,
+            hitLeft = hitObj.offsetLeft,
+            hitRight = hitObj.offsetLeft + hitObj.offsetWidth;
+        if (itemFoot > hitTop && itemRight > hitLeft && itemTop < hitFoot && itemLeft < hitRight) {
+            return true;
+        }
+    },
+    /**碰撞后执行动画**/
+    Over:function( a  ){
+        console.log(a);
+        var _this = this;
+        var x= a.offsetLeft;
+        var y= a.offsetTop;
+        var div = document.createElement("div"),
+            html="<span class=\"over1\"></span>";
+            div.className="over";
+            div.innerHTML=html;
+            _this.body.appendChild(div);
+            div.style.top=y-25+"px";
+            div.style.left=x-25+"px";
+        console.log(div);
+        setTimeout(function(){
+                _this.body.removeChild(div)
+            },1600)
+    }
 });
 
 var a = new game( );
