@@ -19,23 +19,41 @@ header{
     width: 100px;
     height: 100px;
     left:calc(50% - 50px);
-    background-color: aqua;
+    background:rgba(0,0,0,0) url("../img/bow_and_arrow.png");
+    background-size:cover;
+    border: 0;
+    outline: none;
 }
 .bull,.red{
     width: 30px;
     height: 30px;
-    background-color: aqua;
     position: absolute;
     bottom: 100px;
-    left: calc(50% - 15px);
+    left: calc(50% - 10px);
+}
+.bull{
+    background-image: url("../img/love.png");
+    background-size: 30px 30px;
 }
 .red{
-    background-color:red;
+    height: 60px;
+    background-image: url("../img/love.png");
+    background-size: 30px 30px;
 }
 .target{
     width: 45px;
     height: 45px;
-    background-color: blue;
+    background-image: url("../img/boy.png");
+    background-size:cover;
+    position:absolute;
+    top: -20px;
+    left: calc(50% - 22px);
+}
+.target2{
+    background-image: url("../img/girl.png");
+    background-size:cover;
+    width: 45px;
+    height: 45px;
     position:absolute;
     top: -20px;
     left: calc(50% - 22px);
@@ -44,7 +62,7 @@ header{
     position: absolute;
     width: 100px;
     height: 100px;
-    background-color: black;
+    background-color: rgba(0,0,0,0);
 }
 .over .over1{
     animation-name:myfirst,myfirst2;
