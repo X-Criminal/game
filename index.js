@@ -1,16 +1,21 @@
 function game() {
     this.body = document.querySelector(".body");//界面
     this.btn = document.querySelector(".btn");//发射按钮
-    this.ScoreBox = document.querySelector(".Score");
+    this.ScoreBox = document.querySelector(".Score");//记分
+    this.StopAndStart = document.querySelector(".StopAndStart");//开始&暂停
+    this.timeBox = document.querySelector(".time");
+    this.StopAndStart.isStopAndStart=true;//暂停开始记录
+    this.timelis = [0,0];//记录时间
+    this.timeState=null;//保存时间
     this.Score = 0;
     this.life = 3;
     this.Bullets = [];//子弹
     this.BulletsBottom =7;
     this.gargets = [];//下落点；
-    this.gargetsTop = 1;
-    this.gargetTime = 3000;//创建下落点间隔时间
-    this.gargetMoveTime = 25;//下落速度
-    this.Over1 = 300;
+    this.gargetsTop =1;
+    this.gargetTime = 1500;//创建下落点间隔时间
+    this.gargetMoveTime = 10;//下落速度
+    this.Over1 = 350;
     this.clickFlag = null;//点击事件
     this.btnstate = false;//点击事件
     this.point = 300;
@@ -20,13 +25,22 @@ function game() {
 }
 
 Object.assign(game.prototype, {
-    /**初始化**/
+    /**初始化|游戏开始**/
     init: function () {
         var _this = this;
         _this.btn.onclick = function () {
             _this.doOnClick(function (id) {
                 _this.newBullet(id)
             });
+        };/**射击事件**/
+        _this.StopAndStart.onclick=function(){
+            if(this.isStopAndStart){
+                this.isStopAndStart=!this.isStopAndStart;
+                _this.suspend( );
+            }else{
+                this.isStopAndStart=!this.isStopAndStart;
+                _this.start( );
+            }
         };
         /**
          * 初始化数据
@@ -43,6 +57,7 @@ Object.assign(game.prototype, {
         _this.move();
         _this.garget();
         _this.gargetMove();
+        _this.timeFn( );
     },
     /**创建子弹**/
     newBullet: function (id) {
@@ -55,7 +70,7 @@ Object.assign(game.prototype, {
     /**创建下落物品**/
     newgarget: function () {
         var span = document.createElement("span");
-        if (Math.floor(Math.random() * 3) <= 0) {
+        if (Math.floor(Math.random() * 3) <= 1) {
             span.className = "target2";
         } else {
             span.className = "target";
@@ -75,7 +90,7 @@ Object.assign(game.prototype, {
             cb && cb(1);
             _this.clickFlag = null;
             _this.btnstate = false;
-        }, 300);//延时300毫秒执行
+        }, 200);//延时300毫秒执行
         if (this.btnstate) {//取消上次延时未执行的方法
             this.clickFlag = clearTimeout(this.clickFlag);
             cb && cb(2);
@@ -108,14 +123,14 @@ Object.assign(game.prototype, {
                     }
                 }
             }
-        }, 25)
+        }, 15)
     },
     /**生成降落点**/
     garget: function () {
         var _this = this;
         this.closeTime2 = setInterval(function () {
             _this.newgarget()
-        }, this.gargetTime)
+        },2500)
     },
     /**降落点移动**/
     gargetMove: function () {
@@ -185,7 +200,7 @@ Object.assign(game.prototype, {
             _this.ScoreBox.innerHTML = _this.Score;
         }
     },
-    /**生命消减**/.0
+    /**生命消减**/
     reduce: function () {
         this.life--;
         if (this.life <= 0) {
@@ -193,12 +208,14 @@ Object.assign(game.prototype, {
         }
     },
     /**游戏结束**/
-    END: function () {
+    END:function () {
         clearInterval(this.closeTime1);
         clearInterval(this.closeTime2);
         clearInterval(this.closeTime3);
+        clearInterval(this.timeState);
         this.Bullets = [];
         this.gargets = [];
+        this.timelis = [0,0];
         var node = document.querySelectorAll(".bull,.red,.target,.target2");
         for(var i =0,idx=node.length;i<idx;i++){
             this.body.removeChild(node[i])
@@ -207,7 +224,35 @@ Object.assign(game.prototype, {
         this.btn.onclick=null;
         alert("游戏结束")
     },
+    /**游戏暂停**/
+    suspend:function(){
+        clearInterval(this.closeTime1);
+        clearInterval(this.closeTime2);
+        clearInterval(this.closeTime3);
+        clearInterval(this.timeState)
+    },
+    /**开始游戏**/
+    start:function(){
+        this.move();
+        this.garget();
+        this.gargetMove();
+        this.timeFn( );
+    },
+    /**记录游戏时间**/
+    timeFn:function(){
+        let _this = this;
+        this.timeState=setInterval(function(){
+           if(_this.timelis[1]<59){
+               if(_this.timelis[1]%30===0&&_this.gargetsTop<5) _this.gargetsTop=_this.gargetsTop+0.5;
+               _this.timelis[1]=_this.timelis[1]+1
+           }else{
+               _this.timelis[1]=0;
+               _this.timelis[0]=_this.timelis[0]+1
+           }
+            _this.timeBox.innerHTML=(_this.timelis[0]<10?"0"+_this.timelis[0]:_this.timelis[0])+":"+( _this.timelis[1]<10?"0"+_this.timelis[1]:_this.timelis[1])
+       },1000)
+    },
 });
 
 var a = new game();
-a.init();
+a.init()

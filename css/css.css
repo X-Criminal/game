@@ -1,17 +1,53 @@
 html,body{
     height: 100%;
 }
+body{
+    background-color: #634E75;
+}
 header{
     height: 60px;
-    background-color: yellow;
+    background-color: #514572;
 }
+header div{
+    height: 100%;
+    float: left;
+    line-height: 60px;
+}
+header div:nth-child(1){
+    width: 15%;
+    text-align: center;
+    color: white;
+}
+header .progress{
+    width: 39%;
+    height: 25px;
+    background-color: #F4D781;
+    border: 1px solid #DD7A0A;
+    border-radius: 20px;
+    margin: 16px 5px;
+}
+header .time{
+    color: white;
+    margin: 0 20px;
+}
+header .StopAndStart{
+    width: 39px;
+    height: 39px;
+    margin-top: 10px;
+    float: right;
+    margin-right: 10px;
+}
+
 .body{
     background-color: rgba(0,0,0,.5);
     position: relative;
-    width: 320px;
     height: 550px;
     margin: 0 auto;
     overflow: hidden;
+    max-width: 414px;
+    min-width: 320px;
+    background: url("../img/bodybgi.png");
+    background-position: 50% 50%;
 }
 .btn{
     position: absolute;
@@ -70,8 +106,6 @@ header{
     animation-delay:0s, 0.8s;
     position: absolute;
     display: block;
-    /*background: url("../img/aperture.png");*/
-
 }
 
 @keyframes myfirst{
