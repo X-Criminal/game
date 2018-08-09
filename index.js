@@ -28,11 +28,13 @@ Object.assign(game.prototype, {
     /**初始化|游戏开始**/
     init: function () {
         var _this = this;
+        /**射击事件**/
         _this.btn.onclick = function () {
             _this.doOnClick(function (id) {
                 _this.newBullet(id)
             });
-        };/**射击事件**/
+        };
+        /**暂停and开始**/
         _this.StopAndStart.onclick=function(){
             if(this.isStopAndStart){
                 this.isStopAndStart=!this.isStopAndStart;

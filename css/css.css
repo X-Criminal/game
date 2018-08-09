@@ -3,6 +3,11 @@ html,body{
 }
 body{
     background-color: #634E75;
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    -khtml-user-select: none;
+    user-select: none;
 }
 header{
     height: 60px;
@@ -52,13 +57,17 @@ header .StopAndStart{
 .btn{
     position: absolute;
     bottom: 0;
-    width: 100px;
-    height: 100px;
-    left:calc(50% - 50px);
-    background:rgba(0,0,0,0) url("../img/bow_and_arrow.png");
+    width: 140px;
+    height: 125px;
+    left: calc(50% - 65px);
+    background-color:rgba(0,0,0,0);
+    background-image:url("../img/bow_and_arrow.png");
     background-size:cover;
     border: 0;
     outline: none;
+}
+.btn:active{
+    background-image:url("../img/bow_and_arrow_ed.png");
 }
 .bull,.red{
     width: 30px;
