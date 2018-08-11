@@ -14,9 +14,20 @@
     </style>
 </head>
 <body>
+    <DIV class="index">
+        <span class="Close"></span>
+        <span class="Start1"></span>
+        <span class="Start2"></span>
+        <span class="rule"></span>
+        <span class="king"></span>
+    </DIV>
+    <div class="_rule">
+        <span class="_ruleBox"> </span>
+    </div>
+    <div class="_body">
         <header>
             <div class="Score">0</div>
-            <div class="progress"> <span class="hen"> </span></div>
+            <div class="progress"> <span class="hen"></span></div>
             <div class="time">0:00</div>
             <div class="StopAndStart"><img src="./img/stop.png"></div>
         </header>
@@ -24,6 +35,61 @@
 
         </div>
         <input type="button" class="btn">
+    </div>
 </body>
 <script src="index.js"></script>
+<script>
+    var can = window.innerWidth/640;
+    /**关闭按钮位置**/
+     var Close = document.querySelector(".Close");
+         Close.style.left=50*can+"px";
+         Close.style.top=50*can+"px";
+         Close.style.width=50*can+"px";
+         Close.style.height=50*can+"px";
+    /**游戏模式按钮1位置**/
+    var Start1 = document.querySelector(".Start1");
+        Start1.style.left=120*can+"px";
+        Start1.style.top=320*can+"px";
+        Start1.style.width=400*can+"px";
+        Start1.style.height=110*can+"px";
+    /**游戏模式按钮2位置**/
+    var Start2 = document.querySelector(".Start2");
+        Start2.style.left=120*can+"px";
+        Start2.style.top=570*can+"px";
+        Start2.style.width=400*can+"px";
+        Start2.style.height=110*can+"px";
+     /**游戏规则按钮位置**/
+     var rule = document.querySelector(".rule");
+         rule.style.left=140*can+"px";
+         rule.style.bottom=145*can+"px";
+         rule.style.width=120*can+"px";
+         rule.style.height=45*can+"px";
+      /**排行榜位置**/
+      var king = document.querySelector(".king");
+          king.style.right=140*can+"px";
+          king.style.bottom=145*can+"px";
+          king.style.width=120*can+"px";
+          king.style.height=45*can+"px";
+       /**规则关闭按钮**/
+       var _ruleBox= document.querySelector("._ruleBox");
+            _ruleBox.style.left=50*can+"px";
+            _ruleBox.style.top=50*can+"px";
+            _ruleBox.style.width=50*can+"px";
+            _ruleBox.style.height=50*can+"px";
+
+      /**跳转出各种页面**/
+      var _index= document.querySelector(".index"),
+          _rule = document.querySelector("._rule");
+      Start2.onclick=function(){
+          _index.style.top="-100%";
+          a.init()
+      };
+        rule.onclick=function(){
+            _rule.style.top="0px";
+        };
+    _ruleBox.onclick=function(){
+        _rule.style.top="-100%"
+    };
+
+</script>
 </html>

@@ -4,11 +4,12 @@ function game() {
     this.ScoreBox = document.querySelector(".Score");//记分
     this.StopAndStart = document.querySelector(".StopAndStart");//开始&暂停
     this.timeBox = document.querySelector(".time");
+    this.progress = document.querySelector(".progress").children[0];//记录生命
     this.StopAndStart.isStopAndStart=true;//暂停开始记录
     this.timelis = [0,0];//记录时间
     this.timeState=null;//保存时间
     this.Score = 0;
-    this.life = 3;
+    this.life = 0;
     this.Bullets = [];//子弹
     this.BulletsBottom =7;
     this.gargets = [];//下落点；
@@ -19,12 +20,12 @@ function game() {
     this.clickFlag = null;//点击事件
     this.btnstate = false;//点击事件
     this.point = 300;
-    this.closeTime1 = null;
-    this.closeTime2 = null;
-    this.closeTime3 = null;
+    this.closeTime1 = null;//定时器1.0
+    this.closeTime2 = null;//定时器2.0
+    this.closeTime3 = null;//定时去3.0
 }
 
-Object.assign(game.prototype, {
+var __props=  {
     /**初始化|游戏开始**/
     init: function () {
         var _this = this;
@@ -48,7 +49,7 @@ Object.assign(game.prototype, {
          * 初始化数据
          * **/
         this.Score = 0;
-        this.life = 3;
+        this.life = 0;
         this.ScoreBox.innerHTML = this.Score;
         this.Bullets = [];
         this.gargets = [];
@@ -83,7 +84,7 @@ Object.assign(game.prototype, {
     },
     /**点击事件 单击&双击**/
     doOnClick: function (cb) {
-        let _this = this;
+        var _this = this;
         if (this.clickFlag) {//取消上次延时未执行的方法
             this.clickFlag = clearTimeout(this.clickFlag);
             this.btnstate = true;
@@ -177,36 +178,43 @@ Object.assign(game.prototype, {
         var _this = this;
         var x = a.offsetLeft;
         var y = a.offsetTop;
-        var div = document.createElement("div"),
-            html = "<span class=\"over1\"></span>";
+        var div = document.createElement("div");
         div.className = "over";
-        div.innerHTML = html;
-        _this.body.appendChild(div);
-        div.style.top = y - 25 + "px";
-        div.style.left = x - 25 + "px";
         setTimeout(function () {
             _this.body.removeChild(div)
-        }, 1600);
+        }, 1200);
+        div.style.top = y - 25 + "px";
+        div.style.left = x - 25 + "px";
         if (a.className === "bull" && b.className === "target") {
             _this.Score += 10;
             _this.ScoreBox.innerHTML = _this.Score;
+            var  _html = "<span class=\"over1\">+10</span>";
+            div.innerHTML = _html;
+            _this.body.appendChild(div);
             return;
         }
         if (a.className === "red" && b.className === "target2") {
             _this.Score += 10;
+            var  _html = "<span class=\"over1\">+10</span>";
+            div.innerHTML = _html;
+            _this.body.appendChild(div);
             _this.ScoreBox.innerHTML = _this.Score;
             return;
         }
         if (a.className === "bull" && b.className !== "target" || a.className === "red" && a.className !== "target2") {
             _this.Score -= 10;
+            var  _html = "<span class=\"over1\">-10</span>";
+            div.innerHTML = _html;
+            _this.body.appendChild(div);
             _this.ScoreBox.innerHTML = _this.Score;
         }
     },
     /**生命消减**/
     reduce: function () {
-        this.life--;
-        if (this.life <= 0) {
-            this.END()
+        this.life++;
+        this.progress.style.right=this.life*30+"%";
+        if (this.life >= 3) {
+            this.END( )
         }
     },
     /**游戏结束**/
@@ -222,7 +230,7 @@ Object.assign(game.prototype, {
         for(var i =0,idx=node.length;i<idx;i++){
             this.body.removeChild(node[i])
         }
-            node =null;
+        node =null;
         this.btn.onclick=null;
         alert("游戏结束")
     },
@@ -242,19 +250,21 @@ Object.assign(game.prototype, {
     },
     /**记录游戏时间**/
     timeFn:function(){
-        let _this = this;
+        var _this = this;
         this.timeState=setInterval(function(){
-           if(_this.timelis[1]<59){
-               if(_this.timelis[1]%30===0&&_this.gargetsTop<5) _this.gargetsTop=_this.gargetsTop+0.5;
-               _this.timelis[1]=_this.timelis[1]+1
-           }else{
-               _this.timelis[1]=0;
-               _this.timelis[0]=_this.timelis[0]+1
-           }
+            if(_this.timelis[1]<59){
+                if(_this.timelis[1]%30===0&&_this.gargetsTop<5) _this.gargetsTop=_this.gargetsTop+0.5;
+                _this.timelis[1]=_this.timelis[1]+1
+            }else{
+                _this.timelis[1]=0;
+                _this.timelis[0]=_this.timelis[0]+1
+            }
             _this.timeBox.innerHTML=(_this.timelis[0]<10?"0"+_this.timelis[0]:_this.timelis[0])+":"+( _this.timelis[1]<10?"0"+_this.timelis[1]:_this.timelis[1])
-       },1000)
+        },1000)
     },
-});
+};
+for(var k in __props){
+    game.prototype[k]=__props[k];
+}
 
 var a = new game();
-a.init()
