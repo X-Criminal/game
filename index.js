@@ -5,7 +5,6 @@ function game() {
     this.StopAndStart = document.querySelector(".StopAndStart");//开始&暂停
     this.timeBox = document.querySelector(".time");
     this.progress = document.querySelector(".progress").children[0];//记录生命
-    this.StopAndStart.isStopAndStart=true;//暂停开始记录
     this.timelis = [0,0];//记录时间
     this.timeState=null;//保存时间
     this.Score = 0;
@@ -35,15 +34,10 @@ var __props=  {
                 _this.newBullet(id)
             });
         };
-        /**暂停and开始**/
+        /**暂停**/
         _this.StopAndStart.onclick=function(){
-            if(this.isStopAndStart){
-                this.isStopAndStart=!this.isStopAndStart;
+            sup.style.top="0px";
                 _this.suspend( );
-            }else{
-                this.isStopAndStart=!this.isStopAndStart;
-                _this.start( );
-            }
         };
         /**
          * 初始化数据
@@ -56,6 +50,8 @@ var __props=  {
         this.closeTime1 = null;
         this.closeTime2 = null;
         this.closeTime3 = null;
+        this.gargetsTop=1;
+        this.progress.style.right="2px";
         /**开始游戏**/
         _this.move();
         _this.garget();
@@ -232,7 +228,8 @@ var __props=  {
         }
         node =null;
         this.btn.onclick=null;
-        alert("游戏结束")
+        _ement.style.top="0";
+        factios.innerHTML=this.Score;
     },
     /**游戏暂停**/
     suspend:function(){

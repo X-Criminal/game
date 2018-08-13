@@ -14,16 +14,79 @@
     </style>
 </head>
 <body>
-    <DIV class="index">
+    <!--首页-->
+    <div class="b index">
         <span class="Close"></span>
         <span class="Start1"></span>
         <span class="Start2"></span>
         <span class="rule"></span>
         <span class="king"></span>
-    </DIV>
-    <div class="_rule">
+    </div>
+    <!--规则-->
+    <div class="b _rule">
         <span class="_ruleBox"> </span>
     </div>
+    <!--结算-->
+    <div class="b ement">
+        <span class="ement_del Close"></span>
+        <span class="factios"></span>
+        <span class="record"><span>最高记录&nbsp;</span></span>
+        <span class="record1"><span>排名&nbsp;</span></span>
+        <span class="record_rou"></span>
+        <span class="Replay"></span>
+    </div>
+    <!--暂停-->
+    <div class="b sup">
+        <span class="_1"></span>
+        <span class="_2"></span>
+        <span class="_3"></span>
+        <span class="_4"></span>
+    </div>
+    <!--排行-->
+    <div class="b paihang">
+        <table  cellspacing="0">
+            <thead>
+                <tr>
+                    <td>排名</td>
+                    <td>玩家</td>
+                    <td>积分</td>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><img src="./img/medals1.png"></td>
+                    <td><img src=""><span></span>998</td>
+                    <td>1345</td>
+                </tr>
+                <tr>
+                    <td><img src="./img/medals2.png"></td>
+                    <td><img src=""><span></span>998</td>
+                    <td>1345</td>
+                </tr>
+                <tr>
+                    <td><img src="./img/medals3.png"></td>
+                    <td><img src=""><span></span>998</td>
+                    <td>1345</td>
+                </tr>
+                <tr>
+                    <td><span>4</span></td>
+                    <td><img src=""><span></span>998</td>
+                    <td>1345</td>
+                </tr>
+                <tr>
+                    <td><span>5</span></td>
+                    <td><img src=""><span></span>998</td>
+                    <td>1345</td>
+                </tr>
+                <tr>
+                    <td><span>6</span></td>
+                    <td><img src=""><span></span>998</td>
+                    <td>1345</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <!--游戏-->
     <div class="_body">
         <header>
             <div class="Score">0</div>
@@ -37,11 +100,86 @@
         <input type="button" class="btn">
     </div>
 </body>
-<script src="index.js"></script>
 <script>
+    function element(_class,obj){
+        var data = document.querySelectorAll(_class);
+        console.log(data);
+        for(var i = 0 ;i<data.length;i++){
+                for(var k in obj){
+                    data[i].style[k]=obj[k];
+                }
+        }
+    }
     var can = window.innerWidth/640;
+    /**排行位置**/
+    var paihang = document.querySelector(".paihang");
+        paihang.style.paddingTop=128*can+"px";
+        element(".paihang thead",{"lineHeight":80*can+"px"});
+        element(".paihang tbody",{"lineHeight":80*can+"px"});
+    /**暂停后终止游戏**/
+    var sup_4 = document.querySelector(".sup ._4");
+        sup_4.style.top=680*can+"px";
+        sup_4.style.left=220*can+"px";
+        sup_4.style.width=190*can+"px";
+        sup_4.style.height=50*can+"px";
+    /**暂停后重新开始**/
+    var sup_3 = document.querySelector(".sup ._3");
+        sup_3.style.top=585*can+"px";
+        sup_3.style.left=220*can+"px";
+        sup_3.style.width=190*can+"px";
+        sup_3.style.height=50*can+"px";
+    /**暂停后开始**/
+    var sup_2 = document.querySelector(".sup ._2");
+    sup_2.style.top=485*can+"px";
+    sup_2.style.left=220*can+"px";
+    sup_2.style.width=190*can+"px";
+    sup_2.style.height=50*can+"px";
+    /**暂停关闭**/
+    var sup_1 = document.querySelector(".sup ._1");
+        sup_1.style.top=60*can+"px";
+        sup_1.style.left=60*can+"px";
+        sup_1.style.width=50*can+"px";
+        sup_1.style.height=50*can+"px";
+    /**再玩一次位置**/
+    var Replay = document.querySelector(".Replay");
+        Replay.style.right=80*can+"px";
+        Replay.style.bottom=300*can+"px";
+        Replay.style.width=200*can+"px";
+        Replay.style.height=50*can+"px";
+    /**排行榜位置**/
+    var record_rou = document.querySelector(".ement .record_rou");
+        record_rou.style.left=80*can+"px";
+        record_rou.style.bottom=300*can+"px";
+        record_rou.style.width=200*can+"px";
+        record_rou.style.height=50*can+"px";
+    /**结算关闭位置**/
+    var ement =document.querySelector(".ement .Close");
+        ement.style.left=55*can+"px";
+        ement.style.top=55*can+"px";
+        ement.style.width=50*can+"px";
+        ement.style.height=50*can+"px";
+     /**结算分数**/
+     var factios = document.querySelector(".ement .factios");
+        factios.style.top=350*can+"px";
+        factios.style.width=640*can+"px";
+        factios.style.fontSize=100*can+"px";
+        factios.style.height=100*can+"px";
+    /**最高记录**/
+     var record = document.querySelector(".ement .record");
+          record.style.left=80*can+"px";
+          record.style.top=490*can+"px";
+          record.style.width=300*can+"px";
+          record.style.height=50*can+"px";
+          record.style.fontSize=45*can+"px";
+     /**排名**/
+     var record1 = document.querySelector(".ement .record1");
+          record1.style.left=380*can+'px';
+          record1.style.top=490*can+"px";
+          record1.style.width=250*can+"px";
+          record1.style.height=50*can+"px";
+          record1.style.fontSize=45*can+"px";
     /**关闭按钮位置**/
-     var Close = document.querySelector(".Close");
+    var Close = document.querySelector(".index .Close");
          Close.style.left=50*can+"px";
          Close.style.top=50*can+"px";
          Close.style.width=50*can+"px";
@@ -79,7 +217,9 @@
 
       /**跳转出各种页面**/
       var _index= document.querySelector(".index"),
-          _rule = document.querySelector("._rule");
+          _rule = document.querySelector("._rule"),
+          _ement = document.querySelector(".ement"),
+          sup    = document.querySelector(".sup");
       Start2.onclick=function(){
           _index.style.top="-100%";
           a.init()
@@ -90,6 +230,20 @@
     _ruleBox.onclick=function(){
         _rule.style.top="-100%"
     };
-
+      Replay.onclick=function(){
+            a.init( );
+            _ement.style.top="-100%";
+        };
+       sup_2.onclick=function(){
+            sup.style.top="-100%";
+            a.start( );
+        };
+       sup_3.onclick=function(){
+            sup.style.top="-100%";
+            a.END();
+            _ement.style.top="-100%";
+            a.init();
+        };
 </script>
+<script src="index.js"></script>
 </html>
